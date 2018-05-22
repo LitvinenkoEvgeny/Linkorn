@@ -50,8 +50,9 @@
   "dependencies": {
     "autoprefixer": "^7.1.5",
     "custom-select": "^1.1.15",
+    "flatpickr": "^4.5.0",
     "image-webpack-loader": "^3.4.2",
-    "jquery": "^3.2.1",
+    "jquery": "2",
     "jshint": "^2.9.5",
     "lodash": "^4.17.4"
   }
