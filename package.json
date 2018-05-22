@@ -49,6 +49,7 @@
   },
   "dependencies": {
     "autoprefixer": "^7.1.5",
+    "custom-select": "^1.1.15",
     "image-webpack-loader": "^3.4.2",
     "jquery": "^3.2.1",
     "jshint": "^2.9.5",

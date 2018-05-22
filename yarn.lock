@@ -1643,6 +1643,16 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
+custom-event-polyfill@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/custom-event-polyfill/-/custom-event-polyfill-0.3.0.tgz#99807839be62edb446b645832e0d80ead6fa1888"
+
+custom-select@^1.1.15:
+  version "1.1.15"
+  resolved "https://registry.yarnpkg.com/custom-select/-/custom-select-1.1.15.tgz#4f342a405afa00c043afd753f0a578b2862d0b91"
+  dependencies:
+    custom-event-polyfill "^0.3.0"
+
 cwebp-bin@^3.1.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/cwebp-bin/-/cwebp-bin-3.2.0.tgz#ae02df453d8c15341b1d8d499a5226bcf3bf4a6f"

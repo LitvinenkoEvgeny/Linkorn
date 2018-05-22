@@ -25,7 +25,7 @@ const jsLoader = {
 };
 
 const cssLoader = {
-    test: /\.s(c|a)ss$/,
+    test: /\.s?(c|a)ss$/,
     use: [{
         loader: "style-loader" // creates style nodes from JS strings
     }, {

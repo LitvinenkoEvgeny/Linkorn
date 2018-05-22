@@ -1,0 +1,7 @@
+mixin filter_form(items)
+    .container
+        form.filter_form
+            each item in items
+                select.select
+                    each value in item.values
+                        option.select__option(value=value)= value
