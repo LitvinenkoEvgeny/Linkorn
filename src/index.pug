@@ -1,3 +1,7 @@
 extends ./pug/layout.pug
+include ./pug/components/header.pug
+
+block content
+    +header('Analytics', '$', 'aud')
 
 
