@@ -1,0 +1,7 @@
+mixin banner(items)
+    section.banner
+        each item in items
+            .banner__item
+                h3.banner__item-text=item.text
+                p.banner__item-value=item.value
+

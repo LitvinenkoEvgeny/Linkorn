@@ -1,8 +1,14 @@
+include ./select
+include ./checkbox
+include ./button
+
 mixin filter_form(items)
     .container
         form.filter_form
             each item in items
-                select.select
-                    each value in item.values
-                        option.select__option(value=value)= value
+                +select(item.values)
             input.date-input(type="text")
+            +checkbox('Use Agency Yield')
+            +checkbox('Conversion Breakdown')
+            +button('Export Excel', 'submit', 'calendar')
+

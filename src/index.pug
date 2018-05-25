@@ -1,7 +1,8 @@
 extends ./pug/layout.pug
 
-include ./pug/components/filter_form.pug
-include ./pug/components/header.pug
+include ./pug/components/filter_form
+include ./pug/components/header
+include ./pug/components/banner
 
 block content
     +header('Analytics', '$', 'aud')
@@ -16,6 +17,25 @@ block content
         values: ['Use Agency Yield 1', 'Use Agency Yield 2', 'Use Agency Yield 3', 'Use Agency Yield 4'] 
         }
     ])
+    +banner([
+        {
+            text: 'impressions',
+            value: '1,475,298'
+        },
+        {
+            text: 'clicks',
+            value: '13,935'
+        },
+        {
+            text: 'goal achievement',
+            value: '448%'
+        },
+        {
+            text: 'spent budget',
+            value: '$4,447'
+        }
+    ])
+
 
 
 
