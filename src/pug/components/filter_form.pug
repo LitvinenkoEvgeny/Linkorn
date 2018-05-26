@@ -4,11 +4,17 @@ include ./button
 
 mixin filter_form(items)
     .container
-        form.filter_form
-            each item in items
-                +select(item.values)
-            input.date-input(type="text")
-            +checkbox('Use Agency Yield')
-            +checkbox('Conversion Breakdown')
-            +button('Export Excel', 'submit', 'calendar')
+        form.filter-form
+            .filter-form__top-row
+                each item in items
+                    +select(item.values)
+                .date-input__wrp
+                    input.date-input(type="text")
+                    i.date-input__icon.icon-calendar
+            .filter-form__bottom-row
+                .filter-form__checkboxes
+                    +checkbox('Use Agency Yield')
+                    +checkbox('Conversion Breakdown')
+                .filter-form__download-button
+                    +button('Export Excel', 'submit', 'download')
 

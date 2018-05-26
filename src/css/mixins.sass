@@ -21,3 +21,19 @@
   transition-duration: .3s
   transition-timing-function: ease-in-out
 
+=triangleBottom($color)
+  content: ''
+  width: 0
+  height: 0
+  border-style: solid
+  border-width: 6.46px 3.88px 0 3.88px
+  border-color: $color transparent transparent transparent
+
+=triangleTop($color)
+  content: ''
+  width: 0
+  height: 0
+  border-style: solid
+  border-width: 0 3.88px 6.46px 3.88px
+  border-color: transparent transparent $color transparent
+

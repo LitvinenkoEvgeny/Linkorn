@@ -1,0 +1,35 @@
+.select
+  &__option
+
+// rewrite rules from "node_modules/custom-select/build/custom-select.css"
+.custom-select-container
+  border-bottom: 1px solid #e2e2e4
+  font-family: $franklinLight
+  font-size: 18px
+  line-height: 22px
+  color: $gray
+  width: 254px
+  position: relative
+
+  &:after
+    position: absolute
+    right: 10px
+    top: 40%
+    +triangleBottom($gray)
+  &.is-open
+    &:after
+      +triangleTop($gray)
+
+.custom-select-opener
+  background-color: transparent
+  padding: 0
+  &:active
+    outline: none
+  &:focus
+    outline: none
+
+
+.custom-select-option
+  cursor: pointer
+  &.has-focus
+    background-color: lighten($green, 40%)
