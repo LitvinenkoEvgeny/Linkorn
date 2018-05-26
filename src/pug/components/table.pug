@@ -1,0 +1,42 @@
+include ./checkbox
+mixin table(items)
+    .container
+        section.block.table-block
+            .block__header
+                .block__header-left
+                    h4.heading.heading--dark-black Campaigns
+                .block__header-right
+                    +checkbox('CRM')
+                    +checkbox('CPC')
+                    +checkbox('CTR')
+                    i.block__info.icon-info
+            .block__content
+                table.table.row-border
+                    thead.table__head
+                        tr.table__head-row
+                            td Campaign
+                            td Impressions
+                            td Clicks
+                            td Conversions
+                            td Spend
+                            td Goal Achievement
+                            td.abbr CPM
+                            td.abbr CPC
+                            td.abbr CTR
+                            td Efficiency Score
+                    tbody.table__body
+                        each item in items
+                            tr.table__body-row
+                                td=item.campaign
+                                td=item.impressions
+                                td=item.clicks
+                                td=item.conversions
+                                td=item.spend
+                                td=item.achievement
+                                td=item.cpm
+                                td=item.cpc
+                                td=item.ctr
+                                td
+                                    .score
+                                        span.score__text=`${item.score}/10`
+                                        .score__fill(style=`width: ${item.score}0%`)

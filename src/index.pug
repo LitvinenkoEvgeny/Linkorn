@@ -3,6 +3,7 @@ extends ./pug/layout
 include ./pug/components/filter_form
 include ./pug/components/header
 include ./pug/components/banner
+include ./pug/components/table
 
 block content
     +header('Analytics', '$', 'aud')
@@ -32,7 +33,57 @@ block content
         },
         {
             text: 'spent budget',
-            value: '$4,447'
+            value: '$ 4,447'
+        }
+    ])
+    +table([
+        {
+            campaign: 'Roger pen',
+            impressions: '1,475,298',
+            clicks: '13,935',
+            conversions: '448%',
+            spend: '$4,447',
+            achievement: '40%',
+            cpm: '$2.36',
+            cpc: '$2.36',
+            ctr: '$2.36',
+            score: '7'
+        },
+        {
+            campaign: 'Roger pen',
+            impressions: '1,475,298',
+            clicks: '13,935',
+            conversions: '448%',
+            spend: '$4,447',
+            achievement: '40%',
+            cpm: '$2.36',
+            cpc: '$2.36',
+            ctr: '$2.36',
+            score: '5'
+        },
+        {
+            campaign: 'Roger pen',
+            impressions: '1,475,298',
+            clicks: '13,935',
+            conversions: '448%',
+            spend: '$4,447',
+            achievement: '50%',
+            cpm: '$2.36',
+            cpc: '$2.36',
+            ctr: '$2.36',
+            score: '2'
+        },
+        {
+            campaign: 'Roger pen',
+            impressions: '1,475,298',
+            clicks: '13,935',
+            conversions: '448%',
+            spend: '$4,447',
+            achievement: '20%',
+            cpm: '$2.36',
+            cpc: '$2.36',
+            ctr: '$2.36',
+            score: '3'
         }
     ])
 

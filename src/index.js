@@ -8,6 +8,16 @@ import customSelect from "custom-select";
 
 import flatpickr from "flatpickr";
 
+// import "datatables.net/js/jquery.dataTables.js";
+// console.log($.fn.dataTable);
+// $("table").dataTable();
+// dt($, window);
+// dt($('table'), {})
+import dt from "datatables.net";
+// const dataTable = require('datatables.net');
+$.fn.dataTable = dt;
+
+
 customSelect("select");
 const dateInput = document.querySelectorAll(".date-input");
 
@@ -20,12 +30,21 @@ flatpickr(dateInput, {
 });
 
 
-
-$(document).ready(function(){
+$(document).ready(function () {
     $(".checkbox__input").on("click", function () {
         const $this = $(this);
 
         $this.parent(".checkbox").toggleClass("checkbox--checked");
+    });
+
+    $("table").dataTable({
+        "paging": false,
+        "info": false,
+        "searching": false,
+        "autoWidth": false,
+        "columnDefs": [
+            {"targets": [1, 2, 3, 4, 5, 6, 7, 8, 9,], orderable: false, },
+        ],
     });
 });
 

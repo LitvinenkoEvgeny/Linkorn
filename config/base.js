@@ -45,9 +45,9 @@ module.exports = {
                 image: defaults.pngSpritesOutputPath,
                 css: defaults.pngSpritesCssOutputPath
             },
-            apiOptions:{
+            apiOptions: {
                 cssImageRef: '/dist/assets/img/sprite.png'
             },
-        })
+        }),
     ]
 };
