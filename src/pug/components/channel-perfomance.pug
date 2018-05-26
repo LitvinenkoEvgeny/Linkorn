@@ -1,0 +1,12 @@
+include ./select
+
+mixin channel_perfomance()
+    section.block.channel-perf
+        .block__header
+            .block__header-left
+                h4.heading.heading--dark-black Channel Performance
+                    i.icon-info
+            .block__header-right
+                +select(['Conversations', 'Adv', 'Listening Now', 'Vinnie Paz'])
+        .block__content
+            svg.channel-perf__svg

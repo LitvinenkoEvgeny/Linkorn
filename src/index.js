@@ -8,14 +8,11 @@ import customSelect from "custom-select";
 
 import flatpickr from "flatpickr";
 
-// import "datatables.net/js/jquery.dataTables.js";
-// console.log($.fn.dataTable);
-// $("table").dataTable();
-// dt($, window);
-// dt($('table'), {})
 import dt from "datatables.net";
-// const dataTable = require('datatables.net');
 $.fn.dataTable = dt;
+
+import ChannelPerformance from "./js/charts";
+
 
 
 customSelect("select");
@@ -46,5 +43,7 @@ $(document).ready(function () {
             {"targets": [1, 2, 3, 4, 5, 6, 7, 8, 9,], orderable: false, },
         ],
     });
+
+    const CP = new ChannelPerformance(3500, 2120);
 });
 

@@ -1,0 +1,12 @@
+include ./select
+
+mixin channel_split()
+    section.block.channel-split
+        .block__header
+            .block__header-left
+                h4.heading.heading--dark-black Channel Split
+                    i.icon-info
+            .block__header-right
+                +select(['Conversations', 'Adv', 'Listening Now', 'Vinnie Paz'])
+        .block__content
+            svg.channel-split__svg

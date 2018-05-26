@@ -4,6 +4,8 @@ include ./pug/components/filter_form
 include ./pug/components/header
 include ./pug/components/banner
 include ./pug/components/table
+include ./pug/components/channel-perfomance
+include ./pug/components/channel-split
 
 block content
     +header('Analytics', '$', 'aud')
@@ -86,4 +88,8 @@ block content
             score: '3'
         }
     ])
+    .container
+        .charts-row
+            +channel_perfomance()
+            +channel_split()
 

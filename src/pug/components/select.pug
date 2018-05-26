@@ -1,4 +1,8 @@
 mixin select(values)
+    //- Так и не придумал как сделать селект по БЭМ
+    //- передавать названия модификаторов в миксин
+    //- типа: +select({enhancers: 'green', values: [...]})
+    //- на выходе -> select.select.select--green
     select.select
         each value in values
             option.select__option(value=value)= value
