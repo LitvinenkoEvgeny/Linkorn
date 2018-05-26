@@ -19,3 +19,13 @@ flatpickr(dateInput, {
     },
 });
 
+
+
+$(document).ready(function(){
+    $(".checkbox__input").on("click", function () {
+        const $this = $(this);
+
+        $this.parent(".checkbox").toggleClass("checkbox--checked");
+    });
+});
+

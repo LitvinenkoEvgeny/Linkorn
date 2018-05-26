@@ -1,6 +1,7 @@
 
 mixin button(text, buttonType, iconClass)
-    button(type=buttonType).button=text
-    if iconClass
-        i(class=`button__icon.button__icon--${iconClass}`)
+    .button__wrp
+        button(type=buttonType).button=text
+        if iconClass
+            i(class=`button__icon button__icon--${iconClass} icon-${iconClass}`)
 
