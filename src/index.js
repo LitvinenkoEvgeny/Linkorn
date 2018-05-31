@@ -44,6 +44,6 @@ $(document).ready(function () {
         ],
     });
 
-    const CP = new ChannelPerformance(3500, 2120);
+    const CP = new ChannelPerformance(3100, 2120);
 });
 
