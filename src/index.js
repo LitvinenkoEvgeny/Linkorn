@@ -1,5 +1,6 @@
 import "./index.pug";
 import "./css/index.sass";
+import {random} from 'lodash';
 
 import $ from "jquery";
 window.jQuery = $;
@@ -12,7 +13,6 @@ import dt from "datatables.net";
 $.fn.dataTable = dt;
 
 import ChannelPerformance from "./js/charts";
-
 
 
 customSelect("select");
@@ -40,7 +40,7 @@ $(document).ready(function () {
         "searching": false,
         "autoWidth": false,
         "columnDefs": [
-            {"targets": [1, 2, 3, 4, 5, 6, 7, 8, 9,], orderable: false, },
+            {"targets": [1, 2, 3, 4, 5, 6, 7, 8, 9,], orderable: false,},
         ],
     });
 
@@ -55,6 +55,19 @@ $(document).ready(function () {
         },
     ];
 
-    const CP = new ChannelPerformance(data);
+    const CP = new ChannelPerformance({width: 750, height: 250, data: data, selector: ".channel-perf__svg",});
+    setInterval(() => {
+        CP.updateData([
+            {
+                title: "Video",
+                value: random(0, 4000),
+            },
+            {
+                title: "Social",
+                value: random(0, 4000),
+            },
+        ]);
+
+    }, 2000);
 });
 

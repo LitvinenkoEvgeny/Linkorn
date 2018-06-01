@@ -1,12 +1,14 @@
 import * as d3 from "d3";
 
 class Chart {
-    constructor(data = []) {
-        this.width = 750;
-        this.height = 250;
+    constructor({width, height, selector, data = [],}) {
+        this.width = width;
+        this.height = height;
         this.data = data.slice();
+        this.selector = selector;
 
-        this.svg = null;
+        this.svg = d3.select(this.selector);
+        this.basicTransition = d3.transition().duration(750).ease(d3.easeBackInOut);
     }
 
     static valueToKNotation(val) {
@@ -24,24 +26,26 @@ class Chart {
         return x.toLocaleString("en-US");
     }
 
-    updateData(data) {
-        this.data = data.slice();
-    }
-
     setCanvasSizes() {
         this.svg.attr("width", this.width);
         this.svg.attr("height", this.height);
     }
+}
 
+class RadialChart extends Chart {
+    constructor(svgSelector, width = 200, height = 200, data = []) {
+        super(...arguments);
+        this.fullRadius = Math.min(this.width, this.height) / 2;
+        this.arc = d3.arc()
+            .innerRadius(this.fullRadius - 10)
+            .outerRadius(this.fullRadius - 70);
 
+    }
 }
 
 class ChannelPerformance extends Chart {
     constructor() {
         super(...arguments);
-
-        this.svg = d3.select(".channel-perf__svg");
-
 
         this.xScale = d3.scaleLinear().domain([0, 4000,]).range([0, 555,]);
         this.xAxis = d3.axisBottom().scale(this.xScale).tickFormat(Chart.valueToKNotation).tickSize(-220);
@@ -57,13 +61,42 @@ class ChannelPerformance extends Chart {
         this.render();
     }
 
+    updateData(data) {
+        const self = this;
+
+        this.data = data.slice();
+
+        this.svg.selectAll("g.dataGroup").data(this.data).select("rect")
+            .transition(this.basicTransition)
+            .attr("width", d => this.xScale(d.value));
+
+        this.svg.selectAll("g.dataGroup").data(this.data).select("text.channel-performance")
+            .text(d => Chart.numberWithCommas(d.value));
+
+        this.svg.selectAll("g.dataGroup text.channel-performance").each(function (d) {
+            const text = d3.select(this);
+            const textWidth = this.clientWidth;
+            text
+                .transition(self.basicTransition)
+                .attr("transform", d => {
+                    // ensure self text inside svg canvas
+                    // else put text inside block
+                    let textX = self.xScale(d.value) + 20;
+
+                    if (textX + textWidth + 20 >= self.width) {
+                        textX = textX - 120;
+                    }
+                    return `translate(${textX}, 45)`;
+                });
+        });
+    }
+
     render() {
         const self = this;
 
         this.svg.select("#xAxisGroup").append("line")
             .attr("class", "xAxisBase")
             .attr("stroke", "#000")
-            // .attr("")
             .attr("x1", "90%");
 
         this.svg.selectAll("g.dataGroup")
@@ -76,6 +109,7 @@ class ChannelPerformance extends Chart {
             .attr("height", 65)
             .attr("fill", "#00B7F1")
             .attr("fill-opacity", "0.49")
+            .transition(this.basicTransition)
             .attr("width", d => this.xScale(d.value));
 
         this.svg.selectAll("g.dataGroup").each(function (d) {
@@ -89,6 +123,7 @@ class ChannelPerformance extends Chart {
             const text = d3.select(this);
             const textWidth = this.clientWidth;
             text
+                .transition(self.basicTransition)
                 .attr("transform", d => {
                     // ensure self text inside svg canvas
                     // else put text inside block
@@ -103,10 +138,18 @@ class ChannelPerformance extends Chart {
 
         this.svg.selectAll("g.dataGroup text.channel-performance__label").each(function (d) {
             const text = d3.select(this);
-            text.attr("transform", "translate(-75, 34)");
+            text.attr("transform", "translate(-75, 40)");
         });
     }
 
+
+}
+
+class ChannelSplit extends Chart {
+    constructor(percents) {
+        super(...arguments);
+        this.data = percents;
+    }
 
 }
 
