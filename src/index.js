@@ -12,7 +12,7 @@ import flatpickr from "flatpickr";
 import dt from "datatables.net";
 $.fn.dataTable = dt;
 
-import ChannelPerformance from "./js/charts";
+import {BlockChart, ChannelSplit} from "./js/charts";
 
 
 customSelect("select");
@@ -55,19 +55,26 @@ $(document).ready(function () {
         },
     ];
 
-    const CP = new ChannelPerformance({width: 750, height: 250, data: data, selector: ".channel-perf__svg",});
-    setInterval(() => {
-        CP.updateData([
-            {
-                title: "Video",
-                value: random(0, 4000),
-            },
-            {
-                title: "Social",
-                value: random(0, 4000),
-            },
-        ]);
+    // const channelPerformance = new BlockChart({width: 750, height: 250, data: data, selector: ".channel-perf__svg",});
+    const channelSplit = new ChannelSplit({
+        width: 300, height: 250,
+        innerRadius: 70,
+        outerRadius: 90,
+        data: 79, selector: ".channel-split__svg",
+    });
 
-    }, 2000);
+    // setInterval(() => {
+    //     channelPerformance.updateData([
+    //         {
+    //             title: "Video",
+    //             value: random(0, 4000),
+    //         },
+    //         {
+    //             title: "Social",
+    //             value: random(0, 4000),
+    //         },
+    //     ]);
+    //
+    // }, 2000);
 });
 

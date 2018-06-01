@@ -33,17 +33,52 @@ class Chart {
 }
 
 class RadialChart extends Chart {
-    constructor(svgSelector, width = 200, height = 200, data = []) {
-        super(...arguments);
-        this.fullRadius = Math.min(this.width, this.height) / 2;
+    constructor({selector, width, height, innerRadius, outerRadius, data,}) {
+        super({selector, width, height,});
+        this.data = data;
+        this.innerRadius = innerRadius;
+        this.outerRadius = outerRadius;
+
+        this.color = d3.scaleOrdinal()
+            .range(["#a5dd85", "#85dcf8",]);
+
         this.arc = d3.arc()
-            .innerRadius(this.fullRadius - 10)
-            .outerRadius(this.fullRadius - 70);
+            .outerRadius(outerRadius)
+            .innerRadius(innerRadius);
+
+        this.pie = d3.pie()
+            .sort(null)
+            .value(d => d);
+
+        this.setCanvasSizes();
+        this.pieGroup = this.svg.append("g")
+            .attr("transform", `translate(${this.width / 2}, ${ this.height / 2})`);
+
+        // console.log(this.pie([this.data]), this.pie, this.data);
+        this.render();
+    }
+
+    static percentsToMedians(percent) {
+        return (Math.PI * 2) * percent / 100;
+    }
+
+    render() {
+        this.arcGroup = this.pieGroup.selectAll(".arc")
+            .data(this.pie([this.data,]))
+            .enter().append("g")
+            .attr("class", "arc");
+
+        this.arcGroup.append("path").attr("d", this.arc).style("fill", "#a5dd85");
+
+        this.secondArc = d3.arc().outerRadius(this.outerRadius).innerRadius(this.innerRadius)
+            .endAngle(RadialChart.percentsToMedians(79));
+
+        this.arcGroup.append("path").transition(this.basicTransition).attr("d", this.secondArc).style("fill", "#85dcf8");
 
     }
 }
 
-class ChannelPerformance extends Chart {
+class BlockChart extends Chart {
     constructor() {
         super(...arguments);
 
@@ -145,12 +180,11 @@ class ChannelPerformance extends Chart {
 
 }
 
-class ChannelSplit extends Chart {
-    constructor(percents) {
+class ChannelSplit extends RadialChart {
+    constructor() {
         super(...arguments);
-        this.data = percents;
     }
 
 }
 
-export default ChannelPerformance;
+export {BlockChart, ChannelSplit} ;
