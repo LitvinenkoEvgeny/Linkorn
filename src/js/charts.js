@@ -1,10 +1,10 @@
 import * as d3 from "d3";
 
 class Chart {
-    constructor() {
-        this.fontFamily = "LibreFranklinLight";
-        this.width = 450;
-        this.height = 400;
+    constructor(data = []) {
+        this.width = 750;
+        this.height = 250;
+        this.data = data.slice();
 
         this.svg = null;
     }
@@ -19,76 +19,91 @@ class Chart {
         }
     }
 
+    static numberWithCommas(x) {
+        // numberWithCommas(1200) => 1,200
+        return x.toLocaleString("en-US");
+    }
+
+    updateData(data) {
+        this.data = data.slice();
+    }
+
     setCanvasSizes() {
         this.svg.attr("width", this.width);
         this.svg.attr("height", this.height);
     }
 
-    setCanvasFont(fontFamily = this.fontFamily) {
-    //     this.svg.selectAll("text").style("font-family", fontFamily);
-    }
+
 }
 
 class ChannelPerformance extends Chart {
-    constructor(video, social) {
+    constructor() {
         super(...arguments);
 
-        this.video = video;
-        this.social = social;
-        this.data = [this.video, this.social,];
         this.svg = d3.select(".channel-perf__svg");
 
 
-        this.xScale = d3.scaleLinear().domain([0, 4000,]).range([0, 400,]);
-        this.xAxis = d3.axisBottom().scale(this.xScale).tickFormat(Chart.valueToKNotation);
-        this.svg.append("g").attr("id", "xAxisGroup").attr("transform", "translate(0, 150)").call(this.xAxis);
+        this.xScale = d3.scaleLinear().domain([0, 4000,]).range([0, 555,]);
+        this.xAxis = d3.axisBottom().scale(this.xScale).tickFormat(Chart.valueToKNotation).tickSize(-220);
+        this.svg.append("g").attr("id", "xAxisGroup").attr("transform", "translate(80, 220)").call(this.xAxis);
 
-        this.yScale = d3.scaleOrdinal().domain(["video", "social"]).range([0, 150,]);
-        this.yAxis = d3.axisRight().scale(this.yScale);
-        this.svg.append("g").attr("id", "yAxisGroup").call(this.yAxis);
+
+        this.yScale = d3.scaleOrdinal().domain(["video", "social",]).range([0, 220,]);
+        this.yAxis = d3.axisRight().scale(this.yScale).tickValues(() => "").tickSize(0);
+        this.svg.append("g").attr("id", "yAxisGroup").attr("transform", "translate(80, 0)").call(this.yAxis);
 
 
         this.setCanvasSizes();
-        this.setCanvasFont();
         this.render();
     }
 
     render() {
-        const that = this;
+        const self = this;
+
+        this.svg.select("#xAxisGroup").append("line")
+            .attr("class", "xAxisBase")
+            .attr("stroke", "#000")
+            // .attr("")
+            .attr("x1", "90%");
 
         this.svg.selectAll("g.dataGroup")
             .data(this.data)
             .enter()
             .append("g")
             .attr("class", "dataGroup")
-            .attr("transform", (d, i) => `translate(0, ${i * 75})`)
+            .attr("transform", (d, i) => `translate(80, ${i * 100})`)
             .append("rect")
             .attr("height", 65)
             .attr("fill", "#00B7F1")
             .attr("fill-opacity", "0.49")
-            .attr("width", d => this.xScale(d));
+            .attr("width", d => this.xScale(d.value));
 
         this.svg.selectAll("g.dataGroup").each(function (d) {
             const group = d3.select(this);
 
-            group.append("text").text(d);
+            group.append("text").attr("class", "channel-performance").text(Chart.numberWithCommas(d.value));
+            group.append("text").attr("class", "channel-performance__label").text(d.title);
         });
 
-        this.svg.selectAll("g.dataGroup text").each(function (d) {
+        this.svg.selectAll("g.dataGroup text.channel-performance").each(function (d) {
             const text = d3.select(this);
             const textWidth = this.clientWidth;
             text
                 .attr("transform", d => {
-                    // ensure that text inside svg canvas
+                    // ensure self text inside svg canvas
                     // else put text inside block
-                    let textX = that.xScale(d) + 20;
+                    let textX = self.xScale(d.value) + 20;
 
-                    if (textX + textWidth + 20 >= that.width) {
-                        textX = textX - 80;
+                    if (textX + textWidth + 20 >= self.width) {
+                        textX = textX - 120;
                     }
-                    return `translate(${textX}, 34)`;
+                    return `translate(${textX}, 45)`;
                 });
+        });
 
+        this.svg.selectAll("g.dataGroup text.channel-performance__label").each(function (d) {
+            const text = d3.select(this);
+            text.attr("transform", "translate(-75, 34)");
         });
     }
 

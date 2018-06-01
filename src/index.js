@@ -44,6 +44,17 @@ $(document).ready(function () {
         ],
     });
 
-    const CP = new ChannelPerformance(3100, 2120);
+    const data = [
+        {
+            title: "Video",
+            value: 3500,
+        },
+        {
+            title: "Social",
+            value: 2200,
+        },
+    ];
+
+    const CP = new ChannelPerformance(data);
 });
 
