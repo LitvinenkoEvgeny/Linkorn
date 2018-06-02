@@ -1,7 +1,7 @@
 // https://next.json-generator.com/4yCzPW2yB
 export default [
     {
-        "date": "Fri Jan 01 2018 21:32:06 GMT+0000 (UTC)",
+        "date": "2018, 05, 03",
         "views": [
             247,
             58,
@@ -14,7 +14,7 @@ export default [
         ],
     },
     {
-        "date": "Sat Jan 02 2018 21:32:06 GMT+0000 (UTC)",
+        "date": "2018, 05, 04",
         "views": [
             297,
             267,
@@ -27,7 +27,7 @@ export default [
         ],
     },
     {
-        "date": "Sun Jan 03 2018 21:32:06 GMT+0000 (UTC)",
+        "date": "2018, 05, 05",
         "views": [
             179,
             33,
@@ -40,7 +40,7 @@ export default [
         ],
     },
     {
-        "date": "Mon Jan 04 2018 21:32:06 GMT+0000 (UTC)",
+        "date": "2018, 05, 06",
         "views": [
             97,
             191,
@@ -53,7 +53,7 @@ export default [
         ],
     },
     {
-        "date": "Tue Jan 05 2018 21:32:06 GMT+0000 (UTC)",
+        "date": "2018, 05, 07",
         "views": [
             275,
             141,
@@ -66,7 +66,7 @@ export default [
         ],
     },
     {
-        "date": "Wed Jan 06 2018 21:32:06 GMT+0000 (UTC)",
+        "date": "2018, 05, 08",
         "views": [
             226,
             199,
@@ -79,7 +79,7 @@ export default [
         ],
     },
     {
-        "date": "Thu Jan 07 2018 21:32:06 GMT+0000 (UTC)",
+        "date": "2018, 05, 09",
         "views": [
             296,
             112,

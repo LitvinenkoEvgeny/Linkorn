@@ -22,8 +22,14 @@ class Chart {
         }
     }
 
+    /**
+     * translate number to localeString
+     * numberWithCommas(1200) => 1,200
+     *
+     * @param x {number}
+     * @returns {string}
+     */
     static numberWithCommas(x) {
-        // numberWithCommas(1200) => 1,200
         return x.toLocaleString("en-US");
     }
 
@@ -236,15 +242,17 @@ class WeekChart extends Chart {
         this.className = className;
         this.blockWidth = blockWidth;
         this.blockMargin = blockMargin;
-        this.parseTime = d3.timeParse("%d-%b-%y");
+        this.parseTime = d3.timeParse("%d, %m, %y");
 
         this.svg.node().classList.add(this.className);
         this.chartGroup = this.svg.append("g").attr("class", `${this.className}__main-group`);
 
         this.viewsMinMax = d3.extent(flattenDeep(this.data.map(d => d.views)));
         this.sellsMinMax = d3.extent(flattenDeep(this.data.map(d => d.sells)));
-        this.datesMinMax = d3.extent(this.data, d => new Date(d.date));
+        this.datesMinMax = d3.extent(this.data, d => WeekChart.stringToDate(d.date));
+
         console.log(this.datesMinMax);
+
 
         this.sellsScale = d3.scaleLinear().domain([0, 1500,]).range([250, 0,]);
         this.viewsScale = d3.scaleLinear().domain([0, 300,]).range([250, 0,]);
@@ -262,9 +270,19 @@ class WeekChart extends Chart {
 
         this.setCanvasSizes();
         this.render();
+        WeekChart.stringToDate(20);
     }
 
-    getMinViews() {
+    /**
+     * return new date from string with format: "yyyy, mm, dd"
+     * example: "2018, 05, 09"
+     *
+     * @param string {string}
+     * @returns {Date}
+     */
+    static stringToDate(string) {
+        const [year, month, day,] = string.split(",");
+        return new Date(year, month, day);
     }
 
     render() {
