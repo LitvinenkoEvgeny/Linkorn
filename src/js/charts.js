@@ -33,28 +33,20 @@ class Chart {
 }
 
 class RadialChart extends Chart {
-    constructor({selector, width, height, innerRadius, outerRadius, data,}) {
+    constructor({selector, width, height, innerRadius, outerRadius, data, BEMName,}) {
         super({selector, width, height,});
         this.data = data;
+        this.bemName = BEMName;
         this.innerRadius = innerRadius;
         this.outerRadius = outerRadius;
-
-        this.color = d3.scaleOrdinal()
-            .range(["#a5dd85", "#85dcf8",]);
+        this.fullCircle = Math.PI * 2;
 
         this.arc = d3.arc()
-            .outerRadius(outerRadius)
-            .innerRadius(innerRadius);
-
-        this.pie = d3.pie()
-            .sort(null)
-            .value(d => d);
+            .innerRadius(this.innerRadius)
+            .outerRadius(this.outerRadius)
+            .startAngle(0);
 
         this.setCanvasSizes();
-        this.pieGroup = this.svg.append("g")
-            .attr("transform", `translate(${this.width / 2}, ${ this.height / 2})`);
-
-        // console.log(this.pie([this.data]), this.pie, this.data);
         this.render();
     }
 
@@ -62,32 +54,77 @@ class RadialChart extends Chart {
         return (Math.PI * 2) * percent / 100;
     }
 
-    render() {
-        this.arcGroup = this.pieGroup.selectAll(".arc")
-            .data(this.pie([this.data,]))
-            .enter().append("g")
-            .attr("class", "arc");
-
-        this.arcGroup.append("path").attr("d", this.arc).style("fill", "#a5dd85");
-
-        this.secondArc = d3.arc().outerRadius(this.outerRadius).innerRadius(this.innerRadius)
-            .endAngle(RadialChart.percentsToMedians(79));
-
-        this.arcGroup.append("path").transition(this.basicTransition).attr("d", this.secondArc).style("fill", "#85dcf8");
-
+    arcTween(newAngle) {
+        // Returns a tween for a transition’s "d" attribute, transitioning any selected
+        // arcs from their current angle to the specified new angle.
+        // http://bl.ocks.org/mbostock/5100636
+        const self = this;
+        return function (d) {
+            const interpolate = d3.interpolate(d.endAngle, newAngle);
+            return function (t) {
+                d.endAngle = interpolate(t);
+                return self.arc(d);
+            };
+        };
     }
+
+    updateData(data) {
+        this.data = data;
+
+        this.foregroundArc.transition()
+            .duration(750)
+            .attrTween("d", this.arcTween(RadialChart.percentsToMedians(this.data)));
+
+        this.text.transition(this.basicTransition).text(`${this.data}%`);
+    }
+
+    render() {
+        const groupClass = `${this.bemName}__group`;
+        const valueTextClass = `${this.bemName}__text-value`;
+        const valueDescriptionClass = `${this.bemName}__text-description`;
+
+        this.group = this.svg.append("g").attr("class", `radial-chart__group ${groupClass}`)
+            .attr("transform", `translate(${this.width / 2}, ${this.height / 2})`);
+
+        this.text = this.group.append("text").attr("class", `radial-chart__value ${valueTextClass}`)
+            .attr("text-anchor", "middle")
+            .text(`${this.data}%`);
+
+        this.group.append("text")
+            .attr("class", () => `radial-chart__description ${valueDescriptionClass}`)
+            .attr("text-anchor", "middle")
+            .text("Conversions");
+
+        this.backgroundArc = this.group.append("path")
+            .datum({endAngle: this.fullCircle,})
+            .style("fill", "#a5dd85")
+            .attr("d", this.arc);
+
+        this.foregroundArc = this.group.append("path")
+            .datum({endAngle: RadialChart.percentsToMedians(this.data),})
+            .style("fill", "#85dcf8")
+            .attr("d", this.arc);
+    }
+
 }
 
 class BlockChart extends Chart {
-    constructor() {
+    constructor({className, blockHeight, blockMargin,}) {
         super(...arguments);
 
+        this.className = className;
+        this.blockHeight = blockHeight;
+        this.blockMargin = blockMargin;
+
+        // sum of all blocks height and space between
+        this.chartSize = (this.data.length * this.blockHeight) + (this.data.length * this.blockMargin);
+
         this.xScale = d3.scaleLinear().domain([0, 4000,]).range([0, 555,]);
-        this.xAxis = d3.axisBottom().scale(this.xScale).tickFormat(Chart.valueToKNotation).tickSize(-220);
-        this.svg.append("g").attr("id", "xAxisGroup").attr("transform", "translate(80, 220)").call(this.xAxis);
+        this.xAxis = d3.axisBottom().scale(this.xScale).tickFormat(Chart.valueToKNotation).tickSize(-this.chartSize);
+        this.svg.append("g").attr("id", "xAxisGroup").attr("transform", `translate(80, ${this.chartSize})`).call(this.xAxis);
 
 
-        this.yScale = d3.scaleOrdinal().domain(["video", "social",]).range([0, 220,]);
+        this.yScale = d3.scaleOrdinal().domain(["video", "social",]).range([0, this.chartSize,]);
         this.yAxis = d3.axisRight().scale(this.yScale).tickValues(() => "").tickSize(0);
         this.svg.append("g").attr("id", "yAxisGroup").attr("transform", "translate(80, 0)").call(this.yAxis);
 
@@ -108,7 +145,7 @@ class BlockChart extends Chart {
         this.svg.selectAll("g.dataGroup").data(this.data).select("text.channel-performance")
             .text(d => Chart.numberWithCommas(d.value));
 
-        this.svg.selectAll("g.dataGroup text.channel-performance").each(function (d) {
+        this.svg.selectAll("g.dataGroup text.channel-performance").each(function () {
             const text = d3.select(this);
             const textWidth = this.clientWidth;
             text
@@ -154,7 +191,7 @@ class BlockChart extends Chart {
             group.append("text").attr("class", "channel-performance__label").text(d.title);
         });
 
-        this.svg.selectAll("g.dataGroup text.channel-performance").each(function (d) {
+        this.svg.selectAll("g.dataGroup text.channel-performance").each(function () {
             const text = d3.select(this);
             const textWidth = this.clientWidth;
             text
@@ -171,13 +208,19 @@ class BlockChart extends Chart {
                 });
         });
 
-        this.svg.selectAll("g.dataGroup text.channel-performance__label").each(function (d) {
+        this.svg.selectAll("g.dataGroup text.channel-performance__label").each(function () {
             const text = d3.select(this);
             text.attr("transform", "translate(-75, 40)");
         });
     }
 
 
+}
+
+class ChannelPerformance extends BlockChart{
+    constructor(){
+        super(...arguments);
+    }
 }
 
 class ChannelSplit extends RadialChart {
@@ -187,4 +230,4 @@ class ChannelSplit extends RadialChart {
 
 }
 
-export {BlockChart, ChannelSplit} ;
+export {ChannelPerformance, ChannelSplit,} ;

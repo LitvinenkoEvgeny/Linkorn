@@ -12,7 +12,7 @@ import flatpickr from "flatpickr";
 import dt from "datatables.net";
 $.fn.dataTable = dt;
 
-import {BlockChart, ChannelSplit} from "./js/charts";
+import {ChannelPerformance, ChannelSplit} from "./js/charts";
 
 
 customSelect("select");
@@ -55,26 +55,37 @@ $(document).ready(function () {
         },
     ];
 
-    // const channelPerformance = new BlockChart({width: 750, height: 250, data: data, selector: ".channel-perf__svg",});
+    const channelPerformance = new ChannelPerformance({
+        width: 750, height: 250,
+        data: data, selector: ".channel-perf__svg",
+        className: "channel-performance-chart",
+        blockHeight: 65,
+        blockMargin: 35,
+    });
     const channelSplit = new ChannelSplit({
-        width: 300, height: 250,
-        innerRadius: 70,
-        outerRadius: 90,
+        width: 350, height: 300,
+        innerRadius: 90,
+        outerRadius: 130,
         data: 79, selector: ".channel-split__svg",
+        BEMName: "channel-split-chart",
     });
 
-    // setInterval(() => {
-    //     channelPerformance.updateData([
-    //         {
-    //             title: "Video",
-    //             value: random(0, 4000),
-    //         },
-    //         {
-    //             title: "Social",
-    //             value: random(0, 4000),
-    //         },
-    //     ]);
-    //
-    // }, 2000);
+    setInterval(() => {
+        channelSplit.updateData(random(0, 100));
+    }, 2000);
+
+    setInterval(() => {
+        channelPerformance.updateData([
+            {
+                title: "Video",
+                value: random(0, 4000),
+            },
+            {
+                title: "Social",
+                value: random(0, 4000),
+            },
+        ]);
+
+    }, 2000);
 });
 
