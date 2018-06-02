@@ -1,0 +1,26 @@
+.legend
+  width: 100%
+  text-align: center
+  &__item:not(:last-child)
+    margin-right: 58px
+
+.legend-item
+  font-family: $franklinRegular
+  color: $gray
+  font-size: em(20, 16)
+  line-height: 25px
+  &:before
+    content: ''
+    width: 20px
+    height: 20px
+    border-radius: 50%
+    margin-right: 17px
+    display: inline-block
+    position: relative
+    top: 2px
+  &--blue:before
+    background-color: $blue
+  &--orange:before
+    background-color: $orange
+  &--green:before
+    background-color: $green

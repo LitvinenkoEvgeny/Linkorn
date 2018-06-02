@@ -1,8 +1,6 @@
-mixin select(values)
-    //- Так и не придумал как сделать селект по БЭМ
-    //- передавать названия модификаторов в миксин
-    //- типа: +select({enhancers: 'green', values: [...]})
-    //- на выходе -> select.select.select--green
-    select.select
+mixin select(values, modifiers=[])
+    - var classNames = ['select'];
+    - modifiers.forEach(function(modifier) { classNames.push('select--' + modifier)})
+    select(class=classNames)
         each value in values
             option.select__option(value=value)= value

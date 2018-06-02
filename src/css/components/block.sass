@@ -2,10 +2,21 @@
   padding: 42px 37px 53px 43px
   background-color: #ffffff
   box-shadow: 0px 3px 25px rgba(#000000, .15)
+  box-sizing: border-box
+  height: 100%
+  &--left
+    float: left
+  &--right
+    float: right
+  &--big
+    width: percent(827, 1431)
+  &--small
+    width: percent(570, 1431)
   &__header
     display: flex
     justify-content: space-between
     border-bottom: 1px solid #E2E2E4
+    margin-bottom: 82px
   &__header-right
     display: flex
     align-items: center
@@ -15,4 +26,18 @@
     position: relative
     top: -6px
     font-size: em(18, 16)
+  .custom-select-container
+    box-sizing: border-box
+    font-family: $franklinRegular
+    max-width: 160px
+    line-height: 20px
+    color: $green
+    border: 1px solid $green
+    border-radius: 30px
+    padding: 7px 20px
+  .custom-select-opener
+    text-align: center
+  .custom-select-container:after
+    border-color: $green transparent transparent transparent
+
 

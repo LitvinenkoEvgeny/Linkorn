@@ -41,6 +41,8 @@ class RadialChart extends Chart {
         this.outerRadius = outerRadius;
         this.fullCircle = Math.PI * 2;
 
+        this.svg.attr("class", `radial-chart ${className}`);
+
         this.arc = d3.arc()
             .innerRadius(this.innerRadius)
             .outerRadius(this.outerRadius)
@@ -119,14 +121,20 @@ class BlockChart extends Chart {
         // sum of all blocks height and space between
         this.chartSize = (this.data.length * this.blockHeight) + (this.data.length * this.blockMargin);
 
+        this.svg.attr("class", `block-chart ${this.className}`);
+
         this.xScale = d3.scaleLinear().domain([0, 4000,]).range([0, 555,]);
         this.xAxis = d3.axisBottom().scale(this.xScale).tickFormat(Chart.valueToKNotation).tickSize(-this.chartSize);
-        this.svg.append("g").attr("id", "xAxisGroup").attr("transform", `translate(80, ${this.chartSize})`).call(this.xAxis);
+        this.svg.append("g").attr("id", "xAxisGroup")
+            .attr("class", `block-chart__xAxisGroup ${this.className}__xAxisGroup`)
+            .attr("transform", `translate(80, ${this.chartSize})`).call(this.xAxis);
 
 
         this.yScale = d3.scaleOrdinal().domain(["video", "social",]).range([0, this.chartSize,]);
         this.yAxis = d3.axisRight().scale(this.yScale).tickValues(() => "").tickSize(0);
-        this.svg.append("g").attr("id", "yAxisGroup").attr("transform", "translate(80, 0)").call(this.yAxis);
+        this.svg.append("g").attr("id", "yAxisGroup")
+            .attr("class", `block-chart__yAxisGroup ${this.className}__yAxisGroup`)
+            .attr("transform", "translate(80, 0)").call(this.yAxis);
 
 
         this.setCanvasSizes();
@@ -142,10 +150,10 @@ class BlockChart extends Chart {
             .transition(this.basicTransition)
             .attr("width", d => this.xScale(d.value));
 
-        this.svg.selectAll("g.dataGroup").data(this.data).select("text.channel-performance")
+        this.svg.selectAll("g.dataGroup").data(this.data).select("text.block-chart__value")
             .text(d => Chart.numberWithCommas(d.value));
 
-        this.svg.selectAll("g.dataGroup text.channel-performance").each(function () {
+        this.svg.selectAll("g.dataGroup text.block-chart__value").each(function () {
             const text = d3.select(this);
             const textWidth = this.clientWidth;
             text
@@ -167,7 +175,7 @@ class BlockChart extends Chart {
         const self = this;
 
         this.svg.select("#xAxisGroup").append("line")
-            .attr("class", "xAxisBase")
+            .attr("class", `xAxisBase block-chart__xAxisBase ${this.className}__xAxisBase`)
             .attr("stroke", "#000")
             .attr("x1", "90%");
 
@@ -175,7 +183,7 @@ class BlockChart extends Chart {
             .data(this.data)
             .enter()
             .append("g")
-            .attr("class", "dataGroup")
+            .attr("class", `dataGroup block-chart__dataGroup ${this.className}__dataGroup`)
             .attr("transform", (d, i) => `translate(80, ${i * 100})`)
             .append("rect")
             .attr("height", 65)
@@ -187,11 +195,15 @@ class BlockChart extends Chart {
         this.svg.selectAll("g.dataGroup").each(function (d) {
             const group = d3.select(this);
 
-            group.append("text").attr("class", "channel-performance").text(Chart.numberWithCommas(d.value));
-            group.append("text").attr("class", "channel-performance__label").text(d.title);
+            group.append("text")
+                .attr("class", `block-chart__value ${this.className}__value`)
+                .text(Chart.numberWithCommas(d.value));
+            group.append("text")
+                .attr("class", `block-chart__label ${this.className}__label`)
+                .text(d.title);
         });
 
-        this.svg.selectAll("g.dataGroup text.channel-performance").each(function () {
+        this.svg.selectAll("g.dataGroup text.block-chart__value").each(function () {
             const text = d3.select(this);
             const textWidth = this.clientWidth;
             text
@@ -208,7 +220,7 @@ class BlockChart extends Chart {
                 });
         });
 
-        this.svg.selectAll("g.dataGroup text.channel-performance__label").each(function () {
+        this.svg.selectAll("g.dataGroup text.block-chart__label").each(function () {
             const text = d3.select(this);
             text.attr("transform", "translate(-75, 40)");
         });
@@ -217,8 +229,8 @@ class BlockChart extends Chart {
 
 }
 
-class ChannelPerformance extends BlockChart{
-    constructor(){
+class ChannelPerformance extends BlockChart {
+    constructor() {
         super(...arguments);
     }
 }
@@ -227,7 +239,18 @@ class ChannelSplit extends RadialChart {
     constructor() {
         super(...arguments);
     }
-
 }
 
-export {ChannelPerformance, ChannelSplit,} ;
+class Stats extends BlockChart {
+    constructor() {
+        super(...arguments);
+    }
+}
+
+class NewVsReturning extends RadialChart {
+    constructor() {
+        super(...arguments);
+    }
+}
+
+export {ChannelPerformance, ChannelSplit, NewVsReturning, Stats} ;

@@ -1,7 +1,8 @@
-
-mixin button(text, buttonType, iconClass)
+mixin button(text, buttonType, iconClass, modifiers=[])
+    - var classNames = ['button'];
+    - modifiers.forEach(function(modifier) { classNames.push('button--' + modifier)})
     .button__wrp
-        button(type=buttonType).button=text
+        button(type=buttonType, class=classNames)=text
         if iconClass
             i(class=`button__icon button__icon--${iconClass} icon-${iconClass}`)
 

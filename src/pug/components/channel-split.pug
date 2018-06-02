@@ -1,12 +1,14 @@
 include ./select
+include ./legend
 
 mixin channel_split()
-    section.block.channel-split
+    section.block.block--right.block--small.channel-split
         .block__header
             .block__header-left
                 h4.heading.heading--dark-black Channel Split
                     i.icon-info
             .block__header-right
-                +select(['Conversations', 'Adv', 'Listening Now', 'Vinnie Paz'])
+                +select(['Conversions', 'Adv', 'Listening Now', 'Vinnie Paz'])
         .block__content
             svg.channel-split__svg
+            +legend([{color: 'blue', name: 'Social'}, {color: 'green', name: 'Video'}])

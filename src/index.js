@@ -12,7 +12,7 @@ import flatpickr from "flatpickr";
 import dt from "datatables.net";
 $.fn.dataTable = dt;
 
-import {ChannelPerformance, ChannelSplit} from "./js/charts";
+import {ChannelPerformance, ChannelSplit, NewVsReturning, Stats} from "./js/charts";
 
 
 customSelect("select");
@@ -55,6 +55,21 @@ $(document).ready(function () {
         },
     ];
 
+    const statsData = [
+        {
+            title: "Video",
+            value: 3500,
+        },
+        {
+            title: "Social",
+            value: 2200,
+        },
+        {
+            title: "Social",
+            value: 2200,
+        },
+    ];
+
     const channelPerformance = new ChannelPerformance({
         width: 750, height: 250,
         data: data, selector: ".channel-perf__svg",
@@ -70,14 +85,52 @@ $(document).ready(function () {
         className: "channel-split-chart",
     });
 
+    const newVsReturning = new NewVsReturning({
+        width: 350, height: 300,
+        innerRadius: 90,
+        outerRadius: 130,
+        data: 80, selector: ".new-vs-returning__svg",
+        className: "new-vs-returning-chart",
+    });
+
+    const statsChart = new Stats({
+        width: 750, height: 350,
+        data: statsData, selector: ".stats__svg",
+        className: "stats-chart",
+        blockHeight: 65,
+        blockMargin: 35,
+    });
+
     setInterval(() => {
         channelSplit.updateData(random(0, 100));
+    }, 2000);
+
+    setInterval(() => {
+        newVsReturning.updateData(random(0, 100));
     }, 2000);
 
     setInterval(() => {
         channelPerformance.updateData([
             {
                 title: "Video",
+                value: random(0, 4000),
+            },
+            {
+                title: "Social",
+                value: random(0, 4000),
+            },
+        ]);
+
+    }, 2000);
+
+    setInterval(() => {
+        statsChart.updateData([
+            {
+                title: "Video",
+                value: random(0, 4000),
+            },
+            {
+                title: "Social",
                 value: random(0, 4000),
             },
             {

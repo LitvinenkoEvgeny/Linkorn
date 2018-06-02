@@ -1,0 +1,14 @@
+include ./select
+include ./legend
+
+mixin new_vs_returning()
+    section.block.block--small.block--left.new-vs-returning
+        .block__header
+            .block__header-left
+                h4.heading.heading--dark-black New Vs. Returning
+                    i.icon-info
+            .block__header-right
+                +select(['Conversions', 'Adv', 'Listening Now', 'Vinnie Paz'])
+        .block__content
+            svg.new-vs-returning__svg
+            +legend([{color: 'blue', name: 'New'}, {color: 'orange', name: 'Returning'}])

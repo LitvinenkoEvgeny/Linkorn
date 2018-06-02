@@ -1,0 +1,23 @@
+.block-chart
+  font-size: 30px
+  fill: #BBB
+  line-height: 38px
+  font-family: $franklinRegular
+  &__xAxisGroup
+    .tick line
+      stroke: #707070
+      opacity: .2
+    path.domain
+      display: none
+  .tick text
+    transform: translateY(15px)
+  .tick text
+    font-size: 20px
+    fill: $gray
+    font-weight: 400
+    text-transform: uppercase
+  &__label
+    text-transform: none
+    font-size: 20px
+    fill: $gray
+    font-weight: 400

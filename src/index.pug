@@ -6,6 +6,8 @@ include ./pug/components/banner
 include ./pug/components/table
 include ./pug/components/channel-perfomance
 include ./pug/components/channel-split
+include ./pug/components/new-vs-returning
+include ./pug/components/stats
 
 block content
     +header('Analytics', '$', 'aud')
@@ -92,4 +94,7 @@ block content
         .charts-row
             +channel_perfomance()
             +channel_split()
+        .charts-row
+            +new_vs_returning()
+            +stats()
 

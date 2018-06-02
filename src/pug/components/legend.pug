@@ -1,0 +1,4 @@
+mixin legend(items)
+    .legend
+        each item in items
+            span(class=['legend__item', 'legend-item', 'legend-item--' + item.color ])=item.name

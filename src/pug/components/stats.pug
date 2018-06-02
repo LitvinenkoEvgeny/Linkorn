@@ -1,8 +1,8 @@
 include ./select
 include ./legend
 
-mixin channel_perfomance()
-    section.block.block--left.block--big.channel-perf
+mixin stats()
+    section.block.block--big.block--right.stats
         .block__header
             .block__header-left
                 h4.heading.heading--dark-black Channel Performance
@@ -10,5 +10,5 @@ mixin channel_perfomance()
             .block__header-right
                 +select(['Conversions', 'Adv', 'Listening Now', 'Vinnie Paz'], modifiers=['green'])
         .block__content
-            svg.channel-perf__svg
-            +legend([{color: 'blue', name: 'New'}, {color: 'orange', name: 'Returning'}])
+            svg.stats__svg
+            +legend([{color: 'green', name: 'Conversions'}, {color: 'blue', name: 'Conversions'}])
