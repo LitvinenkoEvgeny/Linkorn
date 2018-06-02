@@ -8,6 +8,7 @@ include ./pug/components/channel-perfomance
 include ./pug/components/channel-split
 include ./pug/components/new-vs-returning
 include ./pug/components/stats
+include ./pug/components/week-chart
 
 block content
     +header('Analytics', '$', 'aud')
@@ -97,4 +98,7 @@ block content
         .charts-row
             +new_vs_returning()
             +stats()
+        .charts-row
+            +week_chart()
+
 

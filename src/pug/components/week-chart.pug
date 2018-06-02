@@ -1,0 +1,16 @@
+include ./select
+include ./legend
+
+mixin week_chart()
+    section.block.block--full.week_chart
+        .block__header
+            .block__header-left
+                h4.heading.heading--dark-black Channel Split
+                    i.icon-info
+            .block__header-right
+                +select(['Conversions', 'Adv', 'Listening Now', 'Vinnie Paz'])
+                span Spend vs
+                +select(['Conversions', 'Adv', 'Listening Now', 'Vinnie Paz'])
+        .block__content
+            svg.week_chart__svg
+            +legend([{color: 'blue', name: 'Social'}, {color: 'green', name: 'Video'}])

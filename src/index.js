@@ -1,6 +1,6 @@
 import "./index.pug";
 import "./css/index.sass";
-import {random} from 'lodash';
+import {random} from "lodash";
 
 import $ from "jquery";
 window.jQuery = $;
@@ -12,7 +12,9 @@ import flatpickr from "flatpickr";
 import dt from "datatables.net";
 $.fn.dataTable = dt;
 
-import {ChannelPerformance, ChannelSplit, NewVsReturning, Stats} from "./js/charts";
+import {ChannelPerformance, ChannelSplit, NewVsReturning, Stats, WeekChart,} from "./js/charts";
+
+import weekData from "./js/data";
 
 
 customSelect("select");
@@ -99,6 +101,14 @@ $(document).ready(function () {
         className: "stats-chart",
         blockHeight: 65,
         blockMargin: 35,
+    });
+
+    const weekChart = new WeekChart({
+        width: 1351, height: 300,
+        data: weekData, selector: ".week_chart__svg",
+        className: "week-chart-svg",
+        blockWidth: 50,
+        blockMargin: 10,
     });
 
     setInterval(() => {

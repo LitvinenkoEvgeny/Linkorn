@@ -1,4 +1,5 @@
 import * as d3 from "d3";
+import {flattenDeep} from "lodash";
 
 class Chart {
     constructor({width, height, selector, data = [],}) {
@@ -229,6 +230,49 @@ class BlockChart extends Chart {
 
 }
 
+class WeekChart extends Chart {
+    constructor({className, blockWidth, blockMargin,}) {
+        super(...arguments);
+        this.className = className;
+        this.blockWidth = blockWidth;
+        this.blockMargin = blockMargin;
+        this.parseTime = d3.timeParse("%d-%b-%y");
+
+        this.svg.node().classList.add(this.className);
+        this.chartGroup = this.svg.append("g").attr("class", `${this.className}__main-group`);
+
+        this.viewsMinMax = d3.extent(flattenDeep(this.data.map(d => d.views)));
+        this.sellsMinMax = d3.extent(flattenDeep(this.data.map(d => d.sells)));
+        this.datesMinMax = d3.extent(this.data, d => new Date(d.date));
+        console.log(this.datesMinMax);
+
+        this.sellsScale = d3.scaleLinear().domain([0, 1500,]).range([250, 0,]);
+        this.viewsScale = d3.scaleLinear().domain([0, 300,]).range([250, 0,]);
+        this.datesScale = d3.scaleTime().domain(this.datesMinMax)
+            .range([0, this.width,]);
+
+        this.sellsAxis = d3.axisRight(this.sellsScale).ticks(4);
+        this.viewsAxis = d3.axisLeft(this.viewsScale).ticks(4);
+        this.datesAxis = d3.axisTop(this.datesScale);
+
+
+        this.chartGroup.append("g").attr("class", `${this.className}__sells-axis`).call(this.sellsAxis);
+        this.chartGroup.append("g").attr("class", `${this.className}__views-axis`).call(this.viewsAxis);
+        this.chartGroup.append("g").attr("class", `${this.className}__dates-axis`).call(this.datesAxis);
+
+        this.setCanvasSizes();
+        this.render();
+    }
+
+    getMinViews() {
+    }
+
+    render() {
+        console.log("render");
+    }
+}
+
+
 class ChannelPerformance extends BlockChart {
     constructor() {
         super(...arguments);
@@ -253,4 +297,4 @@ class NewVsReturning extends RadialChart {
     }
 }
 
-export {ChannelPerformance, ChannelSplit, NewVsReturning, Stats} ;
+export {ChannelPerformance, ChannelSplit, NewVsReturning, Stats, WeekChart,} ;
