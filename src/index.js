@@ -67,7 +67,7 @@ $(document).ready(function () {
         innerRadius: 90,
         outerRadius: 130,
         data: 79, selector: ".channel-split__svg",
-        BEMName: "channel-split-chart",
+        className: "channel-split-chart",
     });
 
     setInterval(() => {

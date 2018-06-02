@@ -33,10 +33,10 @@ class Chart {
 }
 
 class RadialChart extends Chart {
-    constructor({selector, width, height, innerRadius, outerRadius, data, BEMName,}) {
+    constructor({selector, width, height, innerRadius, outerRadius, data, className,}) {
         super({selector, width, height,});
         this.data = data;
-        this.bemName = BEMName;
+        this.className = className;
         this.innerRadius = innerRadius;
         this.outerRadius = outerRadius;
         this.fullCircle = Math.PI * 2;
@@ -79,9 +79,9 @@ class RadialChart extends Chart {
     }
 
     render() {
-        const groupClass = `${this.bemName}__group`;
-        const valueTextClass = `${this.bemName}__text-value`;
-        const valueDescriptionClass = `${this.bemName}__text-description`;
+        const groupClass = `${this.className}__group`;
+        const valueTextClass = `${this.className}__text-value`;
+        const valueDescriptionClass = `${this.className}__text-description`;
 
         this.group = this.svg.append("g").attr("class", `radial-chart__group ${groupClass}`)
             .attr("transform", `translate(${this.width / 2}, ${this.height / 2})`);
