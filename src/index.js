@@ -15,6 +15,8 @@ $.fn.dataTable = dt;
 import {ChannelPerformance, ChannelSplit, NewVsReturning, Stats, WeekChart,} from "./js/charts";
 
 import weekData from "./js/data";
+import generateWeekData from './js/generateWeekData'
+
 
 
 customSelect("select");
@@ -150,5 +152,9 @@ $(document).ready(function () {
         ]);
 
     }, 2000);
+
+    setInterval(() => {
+        weekChart.updateData(generateWeekData());
+    }, 4000);
 });
 
