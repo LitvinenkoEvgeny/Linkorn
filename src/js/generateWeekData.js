@@ -1,4 +1,4 @@
-import {random} from "lodash";
+import {random,} from "lodash";
 
 // Returns an array of dates between the two dates
 const getDatesBetween = (startDate, endDate) => {
@@ -17,8 +17,8 @@ const getDatesBetween = (startDate, endDate) => {
         currentDate = new Date(
             currentDate.getFullYear(),
             currentDate.getMonth(),
-            currentDate.getDate() + 1, // Will increase month if over range
-        )
+            currentDate.getDate() + 1 // Will increase month if over range
+        );
     }
 
     return dates;
@@ -27,8 +27,8 @@ const getDatesBetween = (startDate, endDate) => {
 // Usage
 // const dates = getDatesBetween(new Date(2018, 1, 1), new Date(2018, 1, 9));
 
-const genViewsArr = () => [random(300), random(300), random(300)];
-const genSellsArr = () => [random(1500), random(1500), random(1500)];
+const genViewsArr = () => [random(300), random(300), random(300),];
+const genSellsArr = () => [random(1500), random(1500), random(1500),];
 
 export default () => {
     const startDay = random(1, 20);
@@ -43,9 +43,9 @@ export default () => {
             date: `${d.getFullYear()}, ${d.getMonth()}, ${d.getDate()}`,
             sells: genSellsArr(),
             views: genViewsArr(),
-        })
+        });
     });
 
-    return data
+    return data;
 };
 

@@ -1,0 +1,130 @@
+$hamburger-color: #000
+$hamburger-active-color: #fff
+
+.menu
+  z-index: 1
+  +fastTransition(left)
+  position: absolute
+  width: 320px
+  left: -320px
+  background-color: #000
+  display: flex
+  flex-direction: column
+  padding-top: 100px
+  &--active
+    left: 0
+  &__opener
+    width: 44px
+    height: 21px
+    position: absolute
+    top: 60px
+    left: 117px
+    left: 145px
+  &__profile 
+    margin: 45px 0 72px
+    text-align: center
+  &__profile-name
+    margin: 42px
+    margin-top: 42px
+    font-family: $franklinLight
+    line-height: 50px
+    color: #fff
+    font-size: em(20)
+    text-decoration: none
+  &__logo
+    width: 167px
+    height: 27px
+    margin: 0 auto
+  &__links
+    display: flex
+    flex-direction: column
+    padding-left: 40px
+  &__link
+    font-family: $franklinLight
+    line-height: 50px
+    color: #fff
+    font-size: em(20)
+    text-decoration: none
+
+
+
+#menu
+  cursor: pointer
+  z-index: 10
+  span
+    cursor: pointer
+    height: 2px
+    width: 35px
+    background: $hamburger-color
+    position: absolute
+    display: block
+    content: ''
+    transition: all 0.5s ease-in-out
+    &:before, &:after
+      cursor: pointer
+      height: 2px
+      width: 35px
+      background: $hamburger-color
+      position: absolute
+      display: block
+      content: ''
+      transition: all 0.5s ease-in-out
+    &:before
+      animation: undo-top .5s forwards
+    &:after
+      bottom: -10px
+      animation: undo-bottom .5s
+  &.active span
+    background-color: transparent
+    &:before
+      background: $hamburger-active-color
+      top: 0
+      transform: translateY(0px)
+      animation: top-x .5s forwards
+    &:after
+      background: $hamburger-active-color
+      transform: translateY(0px)
+      animation: bottom-x .5s forwards
+
+@keyframes top-x
+  0%
+    transform: translateY(-10px) rotate(0)
+
+  50%
+    transform: translateY(0px) rotate(0)
+
+  100%
+    transform: translateY(0px) rotate(45deg)
+
+
+@keyframes bottom-x
+  0%
+    transfrom: translateY(0) rotate(0)
+
+  50%
+    transform: translateY(-10px) rotate(0)
+
+  100%
+    transform: translateY(-10px) rotate(-45deg)
+
+
+@keyframes undo-top
+  0%
+    transform: translateY(0px) rotate(45deg)
+
+  50%
+    transform: translateY(0px) rotate(0)
+
+  100%
+    transform: translateY(-10px) rotate(0)
+
+
+@keyframes undo-bottom
+  0%
+    transform: translateY(-10px) rotate(-45deg)
+
+  50%
+    transform: translateY(-10px) rotate(0)
+
+  100%
+    transfrom: translateY(0px) rotate(0)

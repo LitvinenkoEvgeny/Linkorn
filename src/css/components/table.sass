@@ -12,25 +12,28 @@
     border-bottom: 1px solid #E2E2E4
   &__head-row
     font-family: $franklinRegular
-    font-size: em(16, 18)
+    font-size: em(18, 16)
     line-height: 22px
     color: #414141
     border-bottom: 1px solid #E2E2E4
 
 .table-block
   box-shadow: 0px 3px 25px rgba(#000000, .15)
-  padding: 42px 37px 53px 43px
+  padding: 18px 37px 39px 43px
   background-color: #fff
   position: relative
-  top: -89px
+  top: -68px
+  .block__header
+    margin-bottom: 9px
   .checkbox
     padding-left: 43px
-    margin-right: 40px
+    margin-right: 44px
 
 .score
   background-color: #e2e2e4
   color: $white
-  width: 100%
+  width: percent(158, 227)
+  margin: 0 auto
   height: 25px
   position: relative
   &__fill
@@ -52,4 +55,22 @@
 table.dataTable thead th, table.dataTable thead td,
 table.dataTable.no-footer
   border-bottom: 1px solid #E2E2E4
+  padding: 10px 0
+  padding-top: 4px
 
+table.dataTable tbody th, table.dataTable tbody td
+  padding: 18px 0
+
+// hide some rows on small devices
+table.dataTable thead tr td:nth-child(5),
+table.dataTable thead tr td:nth-child(6),
+table.dataTable thead tr td:nth-child(7),
+table.dataTable thead tr td:nth-child(8),
+table.dataTable thead tr td:nth-child(9),
+table.dataTable tbody tr td:nth-child(5),
+table.dataTable tbody tr td:nth-child(6),
+table.dataTable tbody tr td:nth-child(7),
+table.dataTable tbody tr td:nth-child(8),
+table.dataTable tbody tr td:nth-child(9),
+    +breakpoint($ltTablet)
+      display: none

@@ -6,9 +6,18 @@
   color: $gray
   padding-right: 30px
   padding-bottom: 14px
+  background: transparent
+  width: 273px
+  +breakpoint($ltTablet)
+    padding-top: 15px
   &__wrp
     position: relative
   &__icon
     position: absolute
-    right: 0
+    font-size: 24px
+    top: -3px
+    right: 4px
+    color: $gray
+    +breakpoint($ltTablet)
+      top: 10px
 

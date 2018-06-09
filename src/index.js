@@ -15,7 +15,7 @@ $.fn.dataTable = dt;
 import {ChannelPerformance, ChannelSplit, NewVsReturning, Stats, WeekChart,} from "./js/charts";
 
 import weekData from "./js/data";
-import generateWeekData from './js/generateWeekData'
+import generateWeekData from "./js/generateWeekData";
 
 
 
@@ -32,6 +32,16 @@ flatpickr(dateInput, {
 
 
 $(document).ready(function () {
+    $("#menu").on("click", function(){
+        const $menuButton = $(this);
+        const $body = $("body");
+        const $menuBlock = $(".menu", $body);
+
+        $menuButton.toggleClass("active");
+        $body.toggleClass("menu-active");
+        $menuBlock.toggleClass("menu--active");
+    });
+
     $(".checkbox__input").on("click", function () {
         const $this = $(this);
 
@@ -83,34 +93,34 @@ $(document).ready(function () {
     });
     const channelSplit = new ChannelSplit({
         width: 350, height: 300,
-        innerRadius: 90,
-        outerRadius: 130,
+        innerRadius: 115,
+        outerRadius: 150,
         data: 79, selector: ".channel-split__svg",
         className: "channel-split-chart",
     });
 
     const newVsReturning = new NewVsReturning({
         width: 350, height: 300,
-        innerRadius: 90,
-        outerRadius: 130,
+        innerRadius: 115,
+        outerRadius: 150,
         data: 80, selector: ".new-vs-returning__svg",
         className: "new-vs-returning-chart",
     });
 
     const statsChart = new Stats({
-        width: 750, height: 350,
+        width: 750, height: 240,
         data: statsData, selector: ".stats__svg",
         className: "stats-chart",
-        blockHeight: 65,
-        blockMargin: 35,
+        blockHeight: 55,
+        blockMargin: 25,
     });
 
     const weekChart = new WeekChart({
-        width: 1351, height: 300,
+        width: 1351, height: 450,
         data: weekData, selector: ".week_chart__svg",
         className: "week-chart-svg",
-        blockWidth: 50,
-        blockMargin: 10,
+        blockWidth: 30,
+        blockMargin: 25,
     });
 
     setInterval(() => {

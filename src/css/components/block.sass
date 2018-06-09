@@ -1,9 +1,19 @@
 .block
-  padding: 42px 37px 53px 43px
+  padding: 15px 37px 53px 43px
   background-color: #ffffff
   box-shadow: 0px 3px 25px rgba(#000000, .15)
   box-sizing: border-box
   height: 100%
+  svg 
+    +breakpoint($ltLaptopL)
+      display: block
+      margin: 0 auto
+    +breakpoint($ltTablet)
+      margin: 0 auto
+  &__content
+    +breakpoint($ltTablet)
+      overflow: hidden
+
   &--left
     float: left
   &--right
@@ -13,6 +23,10 @@
   &--small
     width: percent(570, 1431)
   &--full
+    width: 100%
+    +breakpoint($ltLaptopL)
+      display: none
+  +breakpoint($ltLaptopL)
     width: 100%
   &__header
     display: flex
@@ -29,6 +43,7 @@
     top: -6px
     font-size: em(18, 16)
   .custom-select-container
+    white-space: nowrap
     box-sizing: border-box
     font-family: $franklinRegular
     max-width: 160px

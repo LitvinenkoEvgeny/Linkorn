@@ -9,7 +9,7 @@ mixin filter_form(items)
                 each item in items
                     +select(item.values)
                 .date-input__wrp
-                    input.date-input(type="text")
+                    input.date-input(type="text" placeholder="11/Nov/2017 - 08/Feb/2018")
                     i.date-input__icon.icon-calendar
             .filter-form__bottom-row
                 .filter-form__checkboxes

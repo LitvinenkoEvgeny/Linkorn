@@ -1,5 +1,6 @@
 extends ./pug/layout
 
+include ./pug/components/menu
 include ./pug/components/filter_form
 include ./pug/components/header
 include ./pug/components/banner
@@ -9,6 +10,76 @@ include ./pug/components/channel-split
 include ./pug/components/new-vs-returning
 include ./pug/components/stats
 include ./pug/components/week-chart
+block menu
+    //- img(src=require("./img/icons/Burger menu.svg")).menu__opener
+    //- <a href="#" id="menu"><span></span></a>
+    a#menu.menu__opener
+        span
+    +menu(
+    {
+        name: 'Admin',
+
+    },
+    [
+        {
+            text: 'Agencies',
+            href: '#agencies',
+        },
+        {
+            text: 'Advertisers',
+            href: '#agencies',
+        },
+        {
+            text: 'Campaigns',
+            href: '#agencies',
+        },
+        {
+            text: 'Analytics',
+            href: '#agencies',
+        },
+        {
+            text: 'Analytics',
+            href: '#agencies',
+        },
+        {
+            text: 'Discovery',
+            href: '#agencies',
+        },
+        {
+            text: 'Partners',
+            href: '#agencies',
+        },
+        {
+            text: 'Tools',
+            href: '#agencies',
+            subitems: [
+                {
+                text: 'blah',
+                href: '#blahbhal'
+                }
+            ]
+        },
+        {
+            text: 'Administration',
+            href: '#agencies',
+            subitems: [
+                {
+                text: 'blah',
+                href: '#blahbhal'
+                }
+            ]
+        },
+        {
+            text: 'Dashboards',
+            href: '#agencies',
+            subitems: [
+                {
+                text: 'blah',
+                href: '#blahbhal'
+                }
+            ]
+        },
+    ])
 
 block content
     +header('Analytics', '$', 'aud')
@@ -17,10 +88,13 @@ block content
         values: ['Use Agency Yield 1', 'Use Agency Yield 2', 'Use Agency Yield 3', 'Use Agency Yield 4'] 
         },
         {
-        values: ['Use Agency Yield 1', 'Use Agency Yield 2', 'Use Agency Yield 3', 'Use Agency Yield 4'] 
+        values: ['Australia Hearing', 'Use Agency Yield 2', 'Use Agency Yield 3', 'Use Agency Yield 4'] 
         },
         {
-        values: ['Use Agency Yield 1', 'Use Agency Yield 2', 'Use Agency Yield 3', 'Use Agency Yield 4'] 
+        values: ['All campaigns', 'Use Agency Yield 2', 'Use Agency Yield 3', 'Use Agency Yield 4'] 
+        },
+        {
+        values: ['All layers', 'Use Agency Yield 2', 'Use Agency Yield 3', 'Use Agency Yield 4'] 
         }
     ])
     +banner([
@@ -77,6 +151,18 @@ block content
             cpc: '$2.36',
             ctr: '$2.36',
             score: '2'
+        },
+        {
+            campaign: 'ARoger pen',
+            impressions: '1,475,298',
+            clicks: '13,935',
+            conversions: '448%',
+            spend: '$4,447',
+            achievement: '20%',
+            cpm: '$2.36',
+            cpc: '$2.36',
+            ctr: '$2.36',
+            score: '3'
         },
         {
             campaign: 'ARoger pen',

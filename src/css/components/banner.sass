@@ -8,13 +8,21 @@
     display: inline-block
     width: 25%
     text-align: center
+    +breakpoint($ltTablet)
+      width: 50%
+      margin-top: 25px
   &__item-text
     text-transform: uppercase
     margin: 0
     margin-bottom: 19px
+    +breakpoint($ltTablet)
+      font-size: em(15, 16)
+      margin-bottom: 0
   &__item-value
     margin: 0
     font-size: em(45, 16)
     color: $white
     line-height: 56px
     font-family: $franklinExtraLight
+    +breakpoint($ltTablet)
+      font-size: em(25, 16)

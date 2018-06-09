@@ -1,10 +1,32 @@
 .week-chart-svg
+  overflow: visible
   &__main-group
     transform: translate(0, 10px)
+  .week-chart-svg__views-axis text,
+  .week-chart-svg__dates-axis text,
+  .week-chart-svg__sells-axis text
+      font-family: $franklinExtraLight
+      font-size: 20px
   &__views-axis
-    transform: translate(100%, 0)
+    text 
+      fill: $blue
+  &__sells-axis
+    transform: translateX(15px)
+    text
+      fill: $green
   &__dates-axis
-    transform: translate(0, 275px)
+    text 
+      fill: $gray
+      font-size: 16px
+      transform: translate(100px, 18px)
+    line 
+      display: none
+    .tick:last-child
+      display: none
+  &__thousand-line, &__five-hundred-line
+    stroke-opacity: .5
+    stroke: $gray
+    stroke-width: 2px
   &__views-rect
     fill: $blue
     fill-opacity: .5

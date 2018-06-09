@@ -1,7 +1,12 @@
 .charts-row
-  height: 570px
+  //height: 570px
   margin-bottom: 61px
   +clearfix()
+  .block:last-child
+    +breakpoint($ltLaptopL)
+      margin-top: 61px
+  &:last-child
+    margin-bottom: 0
 
 .channel-perf
   height: 100%

@@ -173,7 +173,7 @@ class BlockChart extends Chart {
                     if (textX + textWidth + 20 >= self.width) {
                         textX = textX - 120;
                     }
-                    return `translate(${textX}, 45)`;
+                    return `translate(${textX}, ${self.blockHeight / 2 + 10})`;
                 });
         });
     }
@@ -191,9 +191,9 @@ class BlockChart extends Chart {
             .enter()
             .append("g")
             .attr("class", `dataGroup block-chart__dataGroup ${this.className}__dataGroup`)
-            .attr("transform", (d, i) => `translate(80, ${i * 100})`)
+            .attr("transform", (d, i) => `translate(80, ${i * (this.blockHeight + this.blockMargin)})`)
             .append("rect")
-            .attr("height", 65)
+            .attr("height", this.blockHeight)
             .attr("fill", "#00B7F1")
             .attr("fill-opacity", "0.49")
             .transition(this.basicTransition)
@@ -223,13 +223,13 @@ class BlockChart extends Chart {
                     if (textX + textWidth + 20 >= self.width) {
                         textX = textX - 120;
                     }
-                    return `translate(${textX}, 45)`;
+                    return `translate(${textX}, ${self.blockHeight / 2 + 10})`;
                 });
         });
 
         this.svg.selectAll("g.dataGroup text.block-chart__label").each(function () {
             const text = d3.select(this);
-            text.attr("transform", "translate(-75, 40)");
+            text.attr("transform", `translate(-75, ${self.blockHeight / 2 + 8})`);
         });
     }
 
@@ -249,23 +249,46 @@ class WeekChart extends Chart {
 
         this.prepareData();
 
-        this.sellsScale = d3.scaleLinear().domain([0, 1500,]).range([250, 0,]);
-        this.viewsScale = d3.scaleLinear().domain([0, 300,]).range([250, 0,]);
+        this.sellsScale = d3.scaleLinear().domain([0, 1500,]).range([this.height - 60, 0,]);
+        this.viewsScale = d3.scaleLinear().domain([0, 300,]).range([this.height - 60, 0,]);
         this.datesScale = d3.scaleTime().domain(this.datesMinMax)
-            .range([25, 1351,]);
+            .range([35, 1351,]);
 
-        this.sellsAxis = d3.axisRight(this.sellsScale).ticks(4);
-        this.viewsAxis = d3.axisLeft(this.viewsScale).ticks(4);
-        this.datesAxis = d3.axisBottom(this.datesScale).ticks(7);
+        this.sellsAxis = d3.axisLeft(this.sellsScale)
+            .tickFormat(val => Chart.valueToKNotation(val))
+            .ticks(4);
+        this.viewsAxis = d3.axisRight(this.viewsScale).ticks(4);
+
+        // reassing this value in updateData method
+        this.datesAxis = d3.axisBottom(this.datesScale).ticks(7).tickFormat(WeekChart.formatDate);
 
 
-        this.chartGroup.append("g").attr("class", `${this.className}__sells-axis`).call(this.sellsAxis);
-        this.chartGroup.append("g").attr("class", `${this.className}__views-axis`).call(this.viewsAxis);
-        this.chartGroup.append("g").attr("class", `${this.className}__dates-axis`).call(this.datesAxis);
+        this.chartGroup.append("g").attr("class", `${this.className}__sells-axis`)
+            .call(this.sellsAxis);
+        this.chartGroup.append("g").attr("class", `${this.className}__views-axis`)
+            .attr("transform", `translate(${this.width - 30}, 0)`)
+            .call(this.viewsAxis);
+        this.chartGroup.append("g").attr("class", `${this.className}__dates-axis`)
+            .attr("transform", `translate(-20, ${this.height - 40})`)
+            .call(this.datesAxis);
 
         this.line = d3.line()
             .x(d => d[0])
             .y(d => d[1]).curve(d3.curveBasis);
+
+        this.thousandLine = this.chartGroup.append("line")
+            .attr("class", `${this.className}__thousand-line`)
+            .attr("x1", 10)
+            .attr("x2", this.width - 25)
+            .attr("y1", this.sellsScale(1000))
+            .attr("y2", this.sellsScale(1000))
+
+        this.fiveHundredLine = this.chartGroup.append("line")
+            .attr("class", `${this.className}__five-hundred-line`)
+            .attr("x1", 10)
+            .attr("x2", this.width - 25)
+            .attr("y1", this.sellsScale(500))
+            .attr("y2", this.sellsScale(500))
 
         this.setCanvasSizes();
         this.preparePoints();
@@ -291,6 +314,7 @@ class WeekChart extends Chart {
      * and sells for y axis
      */
     preparePoints() {
+        // TODO: refactr
         this.datesX = [];
         this.salesY = [];
         this.points = {};
@@ -298,9 +322,10 @@ class WeekChart extends Chart {
         this.data.forEach(item => {
             const point = this.datesScale(WeekChart.stringToDate(item.date));
 
-            this.datesX.push(point + this.blockMargin + 15,
-                point + this.blockWidth + this.blockMargin + 25,
-                point + this.blockWidth + this.blockMargin + 85);
+            this.datesX.push(
+                point + (this.blockMargin ), 
+                point + (this.blockWidth * 2 + this.blockMargin / 2) ,
+                point + (this.blockWidth * 3 + 30) );
 
             item.sells.forEach(sell => {
                 this.salesY.push(this.sellsScale(sell));
@@ -321,7 +346,7 @@ class WeekChart extends Chart {
         // re-render Dates Axis
         this.datesScale = d3.scaleTime().domain(this.datesMinMax)
             .range([25, 1351,]);
-        this.datesAxis = d3.axisBottom(this.datesScale).ticks(7);
+        this.datesAxis = d3.axisBottom(this.datesScale).ticks(7).tickFormat(WeekChart.formatDate);
         this.svg.select(`g.${this.className}__dates-axis`).call(this.datesAxis);
 
 
@@ -353,6 +378,20 @@ class WeekChart extends Chart {
         return new Date(year, month, day);
     }
 
+    static formatDate(date) {
+        // need moment.js here
+        let dateString = date.toLocaleDateString("en-US", {
+                day: "2-digit",
+                month: "short",
+                year: '2-digit',
+            });
+
+        dateString = dateString.replace(",", "");
+        const [month, day, year] = dateString.split(" ");
+
+        return `${day} ${month} ${year}`;
+    }
+
     /**
      * Increase given date by one day
      *
@@ -364,12 +403,16 @@ class WeekChart extends Chart {
     }
 
     render() {
-        this.daysGroups = this.chartGroup.selectAll(`g.${this.className}__days-group`)
+        this.weeksGroup = this.chartGroup
+            .append("g")
+            .attr("class", `${this.className}__weeks-group`)
+
+        this.daysGroups = this.weeksGroup.selectAll(`g.${this.className}__days-group`)
             .data(this.data)
             .enter()
             .append("g")
             .attr("class", `${this.className}__days-group`)
-            .style("transform", d => `translate(${this.datesScale(WeekChart.stringToDate(d.date))}px, 0)`)
+            .style("transform", d => `translate(${this.datesScale(WeekChart.stringToDate(d.date))}px, -10px)`)
             .attr("width", this.blockWidth * 3 + this.blockMargin * 3);
 
         this.viewsRects = this.daysGroups.selectAll(`rect.${this.className}__views-block`)

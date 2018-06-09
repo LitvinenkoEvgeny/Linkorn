@@ -1,0 +1,16 @@
+mixin menu(user, items)
+	aside.menu
+		img.menu__logo(src=require("./img/icons/logo.svg"))
+		.menu__profile
+			//- use js for setting up right image src
+			img.menu__profile-img(src=require('./img/icons/user.png'))
+			.menu__profile-name
+				span=user.name
+		.menu__links
+			each item in items
+				if item.subitems
+					a(href=item.href).menu__link.menu__link--subitems=item.text
+				else
+					a(href=item.href).menu__link=item.text
+
+
