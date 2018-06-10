@@ -166,5 +166,11 @@ $(document).ready(function () {
     setInterval(() => {
         weekChart.updateData(generateWeekData());
     }, 4000);
+
+    $(".menu").height($(document).height());
 });
+$(document).on("resize", function(){
+    $(".menu").height($(document).height());
+
+})
 

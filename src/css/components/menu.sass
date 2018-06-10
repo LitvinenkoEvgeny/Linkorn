@@ -1,25 +1,31 @@
 $hamburger-color: #000
-$hamburger-active-color: #fff
+$hamburger-active-color: #000
+
+body 
+  +fastTransition(transform)
+
+body.menu-active 
+  transform: translateX(320px) 
 
 .menu
   z-index: 1
-  +fastTransition(left)
+  +fastTransition(translate)
   position: absolute
   width: 320px
-  left: -320px
+  left: -640px
   background-color: #000
   display: flex
   flex-direction: column
   padding-top: 100px
   &--active
-    left: 0
+    left: -320px
   &__opener
     width: 44px
     height: 21px
     position: absolute
-    top: 60px
+    top: 67px
     left: 117px
-    left: 145px
+    left: 115px
   &__profile 
     margin: 45px 0 72px
     text-align: center
@@ -48,13 +54,18 @@ $hamburger-active-color: #fff
 
 
 
+$line-width: 45px
+$line-height: 4px
 #menu
   cursor: pointer
   z-index: 10
+  +breakpoint($mobileS 2090px)
+    left: 50%
+    top: 70px
   span
     cursor: pointer
-    height: 2px
-    width: 35px
+    height: $line-height
+    width: $line-width
     background: $hamburger-color
     position: absolute
     display: block
@@ -62,8 +73,8 @@ $hamburger-active-color: #fff
     transition: all 0.5s ease-in-out
     &:before, &:after
       cursor: pointer
-      height: 2px
-      width: 35px
+      height: $line-height
+      width: $line-width
       background: $hamburger-color
       position: absolute
       display: block
