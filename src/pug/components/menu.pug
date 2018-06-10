@@ -8,9 +8,13 @@ mixin menu(user, items)
 				span=user.name
 		.menu__links
 			each item in items
+				- var className = 'menu__link'
+				- className += item.subitems? ' menu__link--subitems' : ''
+				- className += item.active? ' menu__link--active' : ''
 				if item.subitems
-					a(href=item.href).menu__link.menu__link--subitems=item.text
+					a(href=item.href class=className)=item.text
+						.menu__subitem-arrow
 				else
-					a(href=item.href).menu__link=item.text
+					a(href=item.href class=className)=item.text
 
 

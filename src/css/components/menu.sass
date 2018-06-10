@@ -51,6 +51,20 @@ body.menu-active
     color: #fff
     font-size: em(20)
     text-decoration: none
+    position: relative
+  &__link--active
+    color: $green
+  &__subitem-arrow
+    position: absolute
+    right: 20px
+    top: 15px
+    width: 10px
+    height: 10px
+    display: inline-block
+    border: 2px solid $gray
+    border-left-color: transparent
+    border-bottom-color: transparent
+    transform: rotate(45deg)
 
 
 
@@ -59,9 +73,10 @@ $line-height: 4px
 #menu
   cursor: pointer
   z-index: 10
+  padding-top: 10px
   +breakpoint($mobileS 2090px)
     left: 50%
-    top: 70px
+    top: 60px
   span
     cursor: pointer
     height: $line-height
