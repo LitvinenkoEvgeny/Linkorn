@@ -4,7 +4,7 @@ const path = require('path');
 const srcPath = path.join(__dirname, '../src');
 const entryFileName = './index.js';
 const vendorLibs = ['jquery'];
-const publicPath = '/assets/';
+const publicPath = 'assets/';
 
 const pugLoader = {
     test: /\.(pug)$/,
