@@ -26775,11 +26775,14 @@ pug_html = pug_html + "\u003Caside class=\"menu\"\u003E\u003Cimg" + (" class=\"m
   if ('number' == typeof $$obj.length) {
       for (var pug_index0 = 0, $$l = $$obj.length; pug_index0 < $$l; pug_index0++) {
         var item = $$obj[pug_index0];
+var className = 'menu__link'
+className += item.subitems? ' menu__link--subitems' : ''
+className += item.active? ' menu__link--active' : ''
 if (item.subitems) {
-pug_html = pug_html + "\u003Ca" + (" class=\"menu__link menu__link--subitems\""+pug.attr("href", item.href, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = item.text) ? "" : pug_interp)) + "\u003C\u002Fa\u003E";
+pug_html = pug_html + "\u003Ca" + (pug.attr("class", pug.classes([className], [true]), false, true)+pug.attr("href", item.href, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = item.text) ? "" : pug_interp)) + "\u003Cdiv class=\"menu__subitem-arrow\"\u003E\u003C\u002Fdiv\u003E\u003C\u002Fa\u003E";
 }
 else {
-pug_html = pug_html + "\u003Ca" + (" class=\"menu__link\""+pug.attr("href", item.href, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = item.text) ? "" : pug_interp)) + "\u003C\u002Fa\u003E";
+pug_html = pug_html + "\u003Ca" + (pug.attr("class", pug.classes([className], [true]), false, true)+pug.attr("href", item.href, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = item.text) ? "" : pug_interp)) + "\u003C\u002Fa\u003E";
 }
       }
   } else {
@@ -26787,11 +26790,14 @@ pug_html = pug_html + "\u003Ca" + (" class=\"menu__link\""+pug.attr("href", item
     for (var pug_index0 in $$obj) {
       $$l++;
       var item = $$obj[pug_index0];
+var className = 'menu__link'
+className += item.subitems? ' menu__link--subitems' : ''
+className += item.active? ' menu__link--active' : ''
 if (item.subitems) {
-pug_html = pug_html + "\u003Ca" + (" class=\"menu__link menu__link--subitems\""+pug.attr("href", item.href, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = item.text) ? "" : pug_interp)) + "\u003C\u002Fa\u003E";
+pug_html = pug_html + "\u003Ca" + (pug.attr("class", pug.classes([className], [true]), false, true)+pug.attr("href", item.href, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = item.text) ? "" : pug_interp)) + "\u003Cdiv class=\"menu__subitem-arrow\"\u003E\u003C\u002Fdiv\u003E\u003C\u002Fa\u003E";
 }
 else {
-pug_html = pug_html + "\u003Ca" + (" class=\"menu__link\""+pug.attr("href", item.href, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = item.text) ? "" : pug_interp)) + "\u003C\u002Fa\u003E";
+pug_html = pug_html + "\u003Ca" + (pug.attr("class", pug.classes([className], [true]), false, true)+pug.attr("href", item.href, true, true)) + "\u003E" + (pug.escape(null == (pug_interp = item.text) ? "" : pug_interp)) + "\u003C\u002Fa\u003E";
 }
     }
   }
@@ -27264,6 +27270,7 @@ pug_mixins["menu"](
         {
             text: 'Dashboards',
             href: '#agencies',
+            active: true,
             subitems: [
                 {
                 text: 'blah',
@@ -71540,4 +71547,4 @@ exports.default = function () {
 
 /***/ })
 ],[175]);
-//# sourceMappingURL=bundle.4b0a9c1461fbaa37fbac.js.map
+//# sourceMappingURL=bundle.87f3c2cb8aa75f323196.js.map
